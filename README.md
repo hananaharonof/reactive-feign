@@ -1,2 +1,3 @@
-# Reactive Feign and Ribbon
-A modification of Feign and Ribbon for integration with Reactor 3 reactive Mono API
+# Feign Reactive
+An extention of [OpenFeign/Feign](https://github.com/OpenFeign/feign) to support Reactor Reactive APIs.
+
