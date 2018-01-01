@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>feign</groupId>
-    <artifactId>reactor</artifactId>
+    <artifactId>reactive</artifactId>
     <version>8.18.0</version>
     <build>
         <plugins>
