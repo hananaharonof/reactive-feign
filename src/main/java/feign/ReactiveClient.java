@@ -16,11 +16,13 @@
 package feign;
 
 import org.springframework.http.HttpMethod;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
+import java.util.Collections;
 
 /**
  * @author Hanan Aharonof.
@@ -46,8 +48,12 @@ public interface ReactiveClient extends Client {
             if (spec == null) {
                 return Mono.error(new UnsupportedOperationException());
             }
-            request.headers().forEach((key, value) -> spec.header(key, value.toArray(new String[value.size()])));
-            spec.acceptCharset(request.charset());
+            if (!CollectionUtils.isEmpty(request.headers())) {
+                request.headers().forEach((key, value) -> spec.header(key, value.toArray(new String[value.size()])));
+            }
+            if (request.charset() != null) {
+                spec.acceptCharset(request.charset());
+            }
             spec.uri(request.url());
             return spec.exchange();
         }
@@ -70,9 +76,6 @@ public interface ReactiveClient extends Client {
             }
             if (HttpMethod.OPTIONS.toString().equalsIgnoreCase(request.method())) {
                 return reactiveClient.options();
-            }
-            if (HttpMethod.HEAD.toString().equalsIgnoreCase(request.method())) {
-                return reactiveClient.head();
             }
             return null;
         }
